@@ -1,51 +1,87 @@
-import { Button, Input, Table, Space } from "antd";
+import { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { useState, useRef } from "react";
-import { afiliado } from '../data';
-import Highlighter from 'react-highlight-words'
-
-
-export const SiderDashboardComponent = () => {
-    
-  const [searchText, setSearchText] = useState('')
-  const [searchedColumn, setSearchedColumn] = useState('')
+import { Button, Input, Space, Table } from 'antd';
+import Highlighter from 'react-highlight-words';
+const data = [
+  {
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+  },
+  {
+    key: '2',
+    name: 'Joe Black',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+  },
+  {
+    key: '3',
+    name: 'Jim Green',
+    age: 32,
+    address: 'Sydney No. 1 Lake Park',
+  },
+  {
+    key: '4',
+    name: 'Jim Red',
+    age: 32,
+    address: 'London No. 2 Lake Park',
+  },
+];
+const App = () => {
+  
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
-
+  
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
-  }
-
+  };
+  
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText('');
-  }
-
+  };
+  
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters, close}) => (
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
       <div
+        style={{
+          padding: 8,
+        }}
         onKeyDown={(e) => e.stopPropagation()}
       >
-        <Input 
+        <Input
           ref={searchInput}
-          placeholder={`Buscar ${dataIndex}`}
+          placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e)=> setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
+          }}
         />
         <Space>
           <Button
             type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined/>}
+            icon={<SearchOutlined />}
             size="small"
+            style={{
+              width: 90,
+            }}
           >
-            Buscar
+            Search
           </Button>
           <Button
             onClick={() => clearFilters && handleReset(clearFilters)}
             size="small"
+            style={{
+              width: 90,
+            }}
           >
             Reset
           </Button>
@@ -60,7 +96,7 @@ export const SiderDashboardComponent = () => {
               setSearchedColumn(dataIndex);
             }}
           >
-            Filtrar
+            Filter
           </Button>
           <Button
             type="link"
@@ -69,13 +105,13 @@ export const SiderDashboardComponent = () => {
               close();
             }}
           >
-            cerrar
+            close
           </Button>
         </Space>
       </div>
     ),
     filterIcon: (filtered) => (
-      <SearchOutlined 
+      <SearchOutlined
         style={{
           color: filtered ? '#1677ff' : undefined,
         }}
@@ -85,15 +121,15 @@ export const SiderDashboardComponent = () => {
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
-        setTimeout(()=>searchInput.current?.select(), 100);
+        setTimeout(() => searchInput.current?.select(), 100);
       }
     },
     render: (text) =>
       searchedColumn === dataIndex ? (
         <Highlighter
-          highlighterStyle={{
+          highlightStyle={{
             backgroundColor: '#ffc069',
-            padding: 0
+            padding: 0,
           }}
           searchWords={[searchText]}
           autoEscape
@@ -102,38 +138,31 @@ export const SiderDashboardComponent = () => {
       ) : (
         text
       ),
-  })
-
-    
+  });
   const columns = [
     {
-      title:'Afiliado',
-      dataIndex:'nombre',
-      key:'nombre',
-      width: '70%',
-      ...getColumnSearchProps('nombre')
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      width: '30%',
+      ...getColumnSearchProps('name'),
     },
     {
-      title:'Nro Afiliado',
-      dataIndex:'nroAfiliado',
-      key:'nroAfiliado',
-      width: '30%',
-      ...getColumnSearchProps('nroAfiliado')
-    }
-  ]
-
-
-  
-  return (
-    <>
- 
-      <Table 
-        columns={columns} 
-        dataSource={afiliado}
-        pagination={{ hideOnSinglePage: true }}
-        style={{flex:'1',overflow:'auto'}}
-        />
-
-    </>
-  )
-}
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+      width: '20%',
+      ...getColumnSearchProps('age'),
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+      ...getColumnSearchProps('address'),
+      sorter: (a, b) => a.address.length - b.address.length,
+      sortDirections: ['descend', 'ascend'],
+    },
+  ];
+  return <Table columns={columns} dataSource={data} />;
+};
+export default App;

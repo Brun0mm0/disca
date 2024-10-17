@@ -1,27 +1,10 @@
-import React from 'react';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Layout, Divider, theme } from 'antd';
+import { Layout, Divider, theme, Button } from 'antd';
+import { UserAddOutlined } from '@ant-design/icons';
 import { HeaderComponent,FooterComponent } from '../layouts';
 import { SiderDashboardComponent } from '../components';
 
 
 const { Content, Sider } = Layout;
-
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
-  const key = String(index + 1);
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1; 
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
 
 export const Dashboard = () => {
 
@@ -50,12 +33,14 @@ export const Dashboard = () => {
           }}
         >
           <Sider
-            style={{
-              background: colorBgContainer,
-            }}
-            width={320}
-          >
-            <SiderDashboardComponent></SiderDashboardComponent>
+            style={{backgroundColor:'transparent'}}
+            width={300}
+            >
+              <div style={{display: 'flex', flexDirection: 'column', height:'100%'}}>
+                <SiderDashboardComponent></SiderDashboardComponent>
+                <Divider style={{marginTop:'0'}}/>
+                <Button type='primary' icon={<UserAddOutlined/>}>Agregar Afiliado</Button>
+              </div>
           </Sider>
           <Divider
           style={{height:'100%'}} 
@@ -65,7 +50,7 @@ export const Dashboard = () => {
               padding: '0 24px',
               minHeight: 280,
             }}
-          >
+            >
             Content
           </Content>
         </Layout>
