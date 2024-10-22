@@ -1,6 +1,6 @@
 import { Layout, Divider, theme, Button } from 'antd';
 import { UserAddOutlined } from '@ant-design/icons';
-import { HeaderComponent,FooterComponent } from '../layouts';
+import { HeaderComponent,FooterComponent,DashboardComponent } from '../layouts';
 import { SiderDashboardComponent } from '../components';
 
 
@@ -45,14 +45,7 @@ export const Dashboard = () => {
           <Divider
           style={{height:'100%'}} 
           type='vertical'/>
-          <Content
-            style={{
-              padding: '0 24px',
-              minHeight: 280,
-            }}
-            >
-            Content
-          </Content>
+          <DashboardComponent></DashboardComponent>
         </Layout>
       </Content>
       <FooterComponent/>

@@ -1,4 +1,4 @@
-export * from '../layouts/FooterComponent'
-export * from '../layouts/Header'
+
+export * from './FormDashboardComponent'
 export * from './index'
 export * from './SiderDashboardComponent'
