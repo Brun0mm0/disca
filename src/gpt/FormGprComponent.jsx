@@ -1,188 +1,150 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
 import {
   Button,
   Cascader,
+  Checkbox,
+  ColorPicker,
   DatePicker,
   Form,
   Input,
   InputNumber,
-  Mentions,
+  Radio,
+  Rate,
   Select,
+  Slider,
+  Switch,
   TreeSelect,
-  Segmented,
+  Upload,
 } from 'antd';
 const { RangePicker } = DatePicker;
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 6,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 14,
-    },
-  },
+const { TextArea } = Input;
+const normFile = (e) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
 };
-const App = () => {
-  const [componentVariant, setComponentVariant] = useState('filled');
-  const onFormVariantChange = ({ variant }) => {
-    setComponentVariant(variant);
-  };
+export const FormDisabledDemo = () => {
+  const [componentDisabled, setComponentDisabled] = useState(true);
   return (
-    <Form
-      {...formItemLayout}
-      onValuesChange={onFormVariantChange}
-      variant={componentVariant}
-      style={{
-        maxWidth: 600,
-      }}
-      initialValues={{
-        variant: componentVariant,
-      }}
-    >
-      <Form.Item label="Form variant" name="variant">
-        <Segmented options={['outlined', 'filled', 'borderless']} />
-      </Form.Item>
-
-      <Form.Item
-        label="Input"
-        name="Input"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
+    <>
+      <Checkbox
+        checked={componentDisabled}
+        onChange={(e) => setComponentDisabled(e.target.checked)}
       >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="InputNumber"
-        name="InputNumber"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <InputNumber
-          style={{
-            width: '100%',
-          }}
-        />
-      </Form.Item>
-
-      <Form.Item
-        label="TextArea"
-        name="TextArea"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <Input.TextArea />
-      </Form.Item>
-
-      <Form.Item
-        label="Mentions"
-        name="Mentions"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <Mentions />
-      </Form.Item>
-
-      <Form.Item
-        label="Select"
-        name="Select"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <Select />
-      </Form.Item>
-
-      <Form.Item
-        label="Cascader"
-        name="Cascader"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <Cascader />
-      </Form.Item>
-
-      <Form.Item
-        label="TreeSelect"
-        name="TreeSelect"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <TreeSelect />
-      </Form.Item>
-
-      <Form.Item
-        label="DatePicker"
-        name="DatePicker"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <DatePicker />
-      </Form.Item>
-
-      <Form.Item
-        label="RangePicker"
-        name="RangePicker"
-        rules={[
-          {
-            required: true,
-            message: 'Please input!',
-          },
-        ]}
-      >
-        <RangePicker />
-      </Form.Item>
-
-      <Form.Item
+        Form disabled
+      </Checkbox>
+      <Form
+        labelCol={{
+          span: 4,
+        }}
         wrapperCol={{
-          offset: 6,
-          span: 16,
+          span: 14,
+        }}
+        layout="horizontal"
+        disabled={componentDisabled}
+        style={{
+          maxWidth: 600,
         }}
       >
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item label="Checkbox" name="disabled" valuePropName="checked">
+          <Checkbox>Checkbox</Checkbox>
+        </Form.Item>
+        <Form.Item label="Radio">
+          <Radio.Group>
+            <Radio value="apple"> Apple </Radio>
+            <Radio value="pear"> Pear </Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label="Input">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Select">
+          <Select>
+            <Select.Option value="demo">Demo</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="TreeSelect">
+          <TreeSelect
+            treeData={[
+              {
+                title: 'Light',
+                value: 'light',
+                children: [
+                  {
+                    title: 'Bamboo',
+                    value: 'bamboo',
+                  },
+                ],
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item label="Cascader">
+          <Cascader
+            options={[
+              {
+                value: 'zhejiang',
+                label: 'Zhejiang',
+                children: [
+                  {
+                    value: 'hangzhou',
+                    label: 'Hangzhou',
+                  },
+                ],
+              },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item label="DatePicker">
+          <DatePicker />
+        </Form.Item>
+        <Form.Item label="RangePicker">
+          <RangePicker />
+        </Form.Item>
+        <Form.Item label="InputNumber">
+          <InputNumber />
+        </Form.Item>
+        <Form.Item label="TextArea">
+          <TextArea rows={4} />
+        </Form.Item>
+        <Form.Item label="Switch" valuePropName="checked">
+          <Switch />
+        </Form.Item>
+        <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
+          <Upload action="/upload.do" listType="picture-card">
+            <button
+              style={{
+                border: 0,
+                background: 'none',
+              }}
+              type="button"
+            >
+              <PlusOutlined />
+              <div
+                style={{
+                  marginTop: 8,
+                }}
+              >
+                Upload
+              </div>
+            </button>
+          </Upload>
+        </Form.Item>
+        <Form.Item label="Button">
+          <Button>Button</Button>
+        </Form.Item>
+        <Form.Item label="Slider">
+          <Slider />
+        </Form.Item>
+        <Form.Item label="ColorPicker">
+          <ColorPicker />
+        </Form.Item>
+        <Form.Item label="Rate">
+          <Rate />
+        </Form.Item>
+      </Form>
+    </>
   );
 };
-export default App;

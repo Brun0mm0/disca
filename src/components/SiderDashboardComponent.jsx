@@ -3,10 +3,31 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useState, useRef } from "react";
 import { afiliado } from '../data';
 import Highlighter from 'react-highlight-words'
+import { createStyles } from 'antd-style';
+
+const useStyle = createStyles(({ css, token }) => {
+  const { antCls } = token;
+  return {
+    customTable: css`
+      ${antCls}-table {
+        ${antCls}-table-container {
+          ${antCls}-table-body,
+          ${antCls}-table-content {
+            scrollbar-width: thin;
+            scrollbar-color: #eaeaea transparent;
+            scrollbar-gutter: stable;
+          }
+        }
+      }
+    `,
+  };
+});
 
 
 export const SiderDashboardComponent = () => {
     
+  const { styles } = useStyle();
+
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
   const searchInput = useRef(null);
@@ -118,7 +139,7 @@ export const SiderDashboardComponent = () => {
       dataIndex:'nroAfiliado',
       key:'nroAfiliado',
       width: '30%',
-      ...getColumnSearchProps('nroAfiliado')
+      // ...getColumnSearchProps('nroAfiliado')
     }
   ]
 
@@ -126,14 +147,17 @@ export const SiderDashboardComponent = () => {
   
   return (
     <>
- 
       <Table 
+        className={styles.customTable}
         columns={columns} 
         dataSource={afiliado}
-        pagination={{ hideOnSinglePage: true }}
+        bordered="true"
+        pagination={{ 
+          hideOnSinglePage: true 
+        }}
+        // size="middle"
         style={{flex:'1',overflow:'auto'}}
         />
-
     </>
   )
 }

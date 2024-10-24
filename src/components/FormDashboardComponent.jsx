@@ -1,58 +1,32 @@
-import {Form,Input,Upload,Button} from 'antd';
-import { useState } from 'react';
+import {Form,Input,Upload} from 'antd';
+import {PlusOutlined} from '@ant-design/icons';
 
-const {Dragger} = Upload
-
-const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 6,
-      },
-    },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 14,
-      },
-    },
-  }
-
-export const FormDashboardComponent = () => {
-    const [componentVariant, setComponentVariant] = useState('filled');
-    const onFormVariantChange = ({variant}) => {
-        setComponentVariant(variant);
-    }
-  return (
-    <Form
-    {...formItemLayout}
-    onValuesChange={onFormVariantChange}
-    variant={componentVariant}
-    style={{
-        maxWidth:'100%'
-    }}
-    initialValues={{
-        variant: componentVariant
-    }}
-    >
-        <Form.Item
-        label="Prueba"
-        name="Prueba"
-        rules={[{
-            required: true,
-            message:'campo obligatorio'
-        }]}
-        >
-            <Input/>
-        </Form.Item>
-        <Button type="primary" htmlType="submit">
-            Submit
-        </Button>
+export const FormDashboardComponent = () => (
+ 
+    <Form>
+      <Form.Item label="Afiliado">
+        <Input/>
+      </Form.Item>
+      <Form.Item label="Documentacion:">
+        <Upload action="/upload.io" listType="picture-card">
+          <button
+              style={{
+                border: 0,
+                background: 'none',
+              }}
+              type="button"
+              >
+              <PlusOutlined />
+            <div
+                style={{
+                  marginTop: 8,
+                }}
+                >
+                Subir
+            </div>
+          </button>
+        </Upload>
+      </Form.Item>
     </Form>
-  )
-}
+)
 
