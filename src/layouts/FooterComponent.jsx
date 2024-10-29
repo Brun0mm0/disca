@@ -11,7 +11,7 @@ export const FooterComponent = () => {
           padding: '0px 48px 12px 48px'
         }}
       >
-        Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        Gerencia de Sistemas - OSSSB, 25 de Mayo 182
       </Footer>
       
     </>

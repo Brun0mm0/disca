@@ -1,33 +1,28 @@
-import { Layout, Divider, theme, Button } from 'antd';
-import { UserAddOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
 import { HeaderComponent,FooterComponent,DashboardComponent } from '../layouts';
-import { SiderDashboardComponent, DrawerComponent } from '../components';
 
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 export const Dashboard = () => {
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
   return (
     <Layout
     style={{
-      height:'100%'
+      height:'100%',
+      padding: '6px 60px'
     }}>
       <HeaderComponent />
       <Content
         style={{
-          padding: '24px 48px',
+          padding: '12px 0',
         }}
         >
         <Layout
           style={{
             padding: '12px',
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
+            background: '#fff',
+            borderRadius: '10px',
             height: '100%'
           }}
         >
